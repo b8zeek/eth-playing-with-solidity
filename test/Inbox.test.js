@@ -33,6 +33,19 @@ describe('Inbox', () => {
 
     it('has a default message', async () => {
         const message = await inbox.methods.message().call()
+
         assert.equal(message, INITIAL_STRING)
+    })
+
+    it('can change the message', async () => {
+        const newMessage = 'Bye!'
+
+        await inbox.methods.setMessage(newMessage).send({
+            from: accounts[0],
+            gas: '1000000'
+        })
+        const message = await inbox.methods.message().call()
+
+        assert.equal(message, newMessage)
     })
 })
